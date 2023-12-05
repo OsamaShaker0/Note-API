@@ -1,19 +1,25 @@
-const { UnauthenticatedError } = require('../errors');
+const { StatusCodes } = require('http-status-codes');
 const jwt = require('jsonwebtoken');
 
 const auth = async (req, res, next) => {
   const authHeaders = req.headers.authorization;
   if (!authHeaders || !authHeaders.startsWith('Bearer ')) {
-    throw new UnauthenticatedError('Authentication invalid');
+    return res
+      .status(StatusCodes.UNAUTHORIZED)
+      .json({ msg: 'Auhtentication invalid ' });
   }
+  
   const token = authHeaders.split(' ')[1];
+  console.log(token)
   try {
-    const payload = jwt.verify(token, process.env.JWT_SECRET);
-
+    const payload = jwt.verify(token, process.env.SECRET_KEY);
+   
     req.user = { userId: payload.userID, name: payload.name };
     next();
   } catch (error) {
-    throw new UnauthenticatedError('Authentication invalid');
+    return res
+      .status(StatusCodes.UNAUTHORIZED)
+      .json({ msg: 'Authentication invalid' });
   }
 };
-module.exports = auth
+module.exports = auth;
