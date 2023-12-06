@@ -4,13 +4,30 @@ const connectDB = require('./db/connect');
 const notFound = require('./middleware/not-found');
 const authRoutes = require('./routes/auth');
 const auth = require('./middleware/authentication');
-const notesRoutes = require('./routes/note')
+const notesRoutes = require('./routes/note');
 const app = express();
-app.use(express.json());
 
+// security package
+const helmet = require('helmet');
+const cors = require('cors');
+const xss = require('xss-clean');
+const rateLimiter = require('express-rate-limit');
+// middleware
+app.use(helmet());
+app.use(cors());
+app.use(xss());
+app.set('trust proxy', 1);
+app.use(
+  rateLimiter({
+    windowMs: 15 * 60 * 1000,
+    max: 100,
+  })
+);
+app.use(express.json());
 // routes
+
 app.use('/api/v1/auth', authRoutes);
-app.use('/api/v1/', auth,notesRoutes);
+app.use('/api/v1/', auth, notesRoutes);
 
 // middlewares
 app.use(notFound);

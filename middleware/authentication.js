@@ -8,12 +8,12 @@ const auth = async (req, res, next) => {
       .status(StatusCodes.UNAUTHORIZED)
       .json({ msg: 'Auhtentication invalid ' });
   }
-  
+
   const token = authHeaders.split(' ')[1];
-  console.log(token)
+
   try {
     const payload = jwt.verify(token, process.env.SECRET_KEY);
-   
+
     req.user = { userId: payload.userID, name: payload.name };
     next();
   } catch (error) {

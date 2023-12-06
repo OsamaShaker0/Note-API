@@ -1,10 +1,5 @@
 const { StatusCodes } = require('http-status-codes');
-const {
-  CustomAPIError,
-  UnauthenticatedError,
-  NotFoundError,
-  BadRequestError,
-} = require('../errors/index');
+
 const User = require('../model/User');
 
 const register = async (req, res) => {

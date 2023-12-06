@@ -3,6 +3,6 @@ const {getAllNotes , createNotes , singleNote , updateNote , deleteNote} = requi
 const router = express.Router();
 
 router.route('/note').get(getAllNotes).post(createNotes);
-router.route('/note:id').get(singleNote).patch(updateNote).delete(deleteNote)
+router.route('/note/:id').get(singleNote).patch(updateNote).delete(deleteNote)
 
 module.exports = router;
