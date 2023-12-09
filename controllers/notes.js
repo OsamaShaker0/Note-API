@@ -1,4 +1,4 @@
-const Note = require('../model/Note');
+const Note = require('../model/note');
 const { StatusCodes } = require('http-status-codes');
 const getAllNotes = async (req, res) => {
   try {
