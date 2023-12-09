@@ -25,6 +25,11 @@ app.use(
 );
 app.use(express.json());
 // routes
+app.get('/', (req, res) => {
+  res.send(
+    `<a href='https://documenter.getpostman.com/view/31038051/2s9YkgEkY7'>Note-API-docs</a>`
+  );
+});
 
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/', auth, notesRoutes);
